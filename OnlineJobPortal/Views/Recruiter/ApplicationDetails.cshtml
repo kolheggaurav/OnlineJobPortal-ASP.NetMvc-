@@ -1,0 +1,192 @@
+﻿@model OnlineJobPortal.Models.Application
+
+@{
+    ViewBag.Title = "ApplicationDetails";
+}
+
+<style>
+    /* General Styling for Container */
+    .container {
+        background: #fafafa; /* Soft white */
+        border-radius: 12px;
+        padding: 25px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); /* Elevated shadow */
+        font-family: 'Inter', sans-serif; /* Clean and modern font */
+        max-width: 900px;
+        margin: 40px auto;
+        color: #333; /* Subtle dark text color */
+    }
+
+    /* Header Styling */
+    h2 {
+        font-size: 28px;
+        font-weight: bold;
+        color: #4a4a4a;
+        text-align: center;
+        margin-bottom: 30px;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+    }
+
+    h3 {
+        font-size: 22px;
+        font-weight: 600;
+        color: #444;
+        margin-bottom: 20px;
+        position: relative;
+    }
+
+    h3::after {
+        content: '';
+        display: block;
+        width: 50px;
+        height: 3px;
+        background: linear-gradient(90deg, #c19a6b, #a47e45); /* Gold gradient */
+        margin-top: 8px;
+    }
+
+    /* Card Styling */
+    .card {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 20px 30px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow */
+        margin-bottom: 30px;
+    }
+
+    .card p {
+        font-size: 16px;
+        color: #555; /* Neutral text color */
+        margin: 5px 0;
+        line-height: 1.7;
+    }
+
+    .card p strong {
+        color: #222; /* Bold emphasis */
+    }
+
+    .card a {
+        color: #c19a6b;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .card a:hover {
+        color: #a47e45;
+        text-decoration: underline;
+    }
+
+    /* Buttons */
+    .btn {
+        display: inline-block;
+        font-size: 14px;
+        font-weight: 600;
+        padding: 12px 25px;
+        border-radius: 30px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.3s ease-in-out;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Button shadow */
+    }
+
+    .btn-success {
+        background: linear-gradient(90deg, #4caf50, #81c784); /* Green gradient */
+        color: white;
+        border: none;
+    }
+
+    .btn-success:hover {
+        background: linear-gradient(90deg, #43a047, #66bb6a);
+        transform: translateY(-2px); /* Subtle lift effect */
+    }
+
+    .btn-danger {
+        background: linear-gradient(90deg, #e53935, #ef5350); /* Red gradient */
+        color: white;
+        border: none;
+    }
+
+    .btn-danger:hover {
+        background: linear-gradient(90deg, #d32f2f, #e57373);
+        transform: translateY(-2px); /* Subtle lift effect */
+    }
+
+    /* Dividers */
+    .divider {
+        height: 1px;
+        background: linear-gradient(90deg, #c19a6b, #ffffff, #c19a6b); /* Gold and white blend */
+        margin: 20px 0;
+        border: none;
+    }
+
+    /* Responsive Design */
+    @@media screen and (max-width: 768px) {
+        .container {
+            padding: 15px;
+        }
+
+        h2 {
+            font-size: 24px;
+        }
+
+        h3 {
+            font-size: 18px;
+        }
+
+        .card p {
+            font-size: 14px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 12px;
+        }
+    }
+</style>
+
+<div class="container mt-5">
+    <h2>Application Details</h2>
+
+    <div class="card shadow p-4">
+        <h3>Job Details</h3>
+        <p><strong>Title:</strong> @Model.Job.Job_Tittle</p>
+        <p><strong>Company:</strong> @Model.Job.Company_Name</p>
+        <p><strong>Location:</strong> @Model.Job.Job_Location</p>
+        <p><strong>Type:</strong> @Model.Job.Job_Type</p>
+        <p><strong>Salary:</strong> @Model.Job.Salary</p>
+        <p><strong>Description:</strong> @Model.Job.Description</p>
+        <p><strong>Posted On:</strong> @Model.Job.Job_PstedDate.ToShortDateString()</p>
+
+        <hr class="divider" />
+
+        <h3>Candidate Details</h3>
+        <p><strong>Name:</strong> @Model.Candidate_Profile.Name</p>
+        <p><strong>Qualification:</strong> @Model.Candidate_Profile.Highest_Qalification</p>
+        <p><strong>Email:</strong> @Model.Candidate_Profile.Address</p>
+        <p>
+            <strong>Resume:</strong>
+            @if (!string.IsNullOrEmpty(Model.Candidate_Profile.ResumePdf))
+            {
+                <a href="@Url.Content("~/Content/pdf/" + Model.Candidate_Profile.ResumePdf)" target="_blank">View Resume</a>
+            }
+            else
+            {
+                <span>Not Uploaded</span>
+            }
+        </p>
+
+        <hr class="divider" />
+
+        <h3>Application Details</h3>
+        <p><strong>Applied On:</strong> @Model.AppliedDate.ToShortDateString()</p>
+
+        <div class="mt-4 text-center">
+            <form action="@Url.Action("Status", "Candidate")" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="applicationId" value="@Model.Application_Id" />
+                <button type="submit" name="status" value="Shortlisted" class="btn btn-success mr-3">Shortlist</button>
+                <button type="submit" name="status" value="Rejected" class="btn btn-danger">Reject</button>
+            </form>
+        </div>
+    </div>
+</div>

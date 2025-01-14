@@ -1,0 +1,181 @@
+﻿@model IEnumerable<OnlineJobPortal.Models.Job_Listing>
+
+<!-- Add custom CSS for styling -->
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: rgba(222, 184, 135, 0.445);
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    h2 {
+        font-size: 2.5rem;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .alert {
+        padding: 15px;
+        font-size: 1.2rem;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+
+    .alert-success {
+        background-color: #28a745;
+        color: #fff;
+    }
+
+    .alert-danger {
+        background-color: #dc3545;
+        color: #fff;
+    }
+
+    .alert-warning {
+        background-color: #ffc107;
+        color: #fff;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 40px;
+    }
+
+        .table th, .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table th {
+            background-color: #343a40;
+            color: #fff;
+        }
+
+    .table-striped tbody tr:nth-child(odd) {
+        background-color: #f9f9f9;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .table td {
+        font-size: 1rem;
+    }
+
+    .badge {
+        padding: 5px 10px;
+        border-radius: 12px;
+        color: #fff;
+        font-size: 1rem;
+    }
+
+    .badge-approved {
+        background-color: #28a745;
+    }
+
+    .badge-rejected {
+        background-color: #dc3545;
+    }
+
+    /* Styling for the small indication boxes */
+    .status-box {
+        display: inline-block;
+        padding: 8px 15px;
+        border-radius: 8px;
+        font-size: 1rem;
+        color: black;
+        margin-right: 20px;
+        font-weight: bold;
+        position: relative;
+        border:1px solid black;
+
+    }
+
+    .approved-box {
+        background-color: #d4edda; /* Green */
+    }
+
+    .rejected-box {
+        background-color: #f8d7da; /* Red */
+    }
+
+    /* Flexbox layout for status boxes */
+    .status-container {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 30px;
+    }
+</style>
+
+<!-- Page Content -->
+<div class="container">
+    <h2>Admin Responses</h2>
+
+    <!-- Error Message if no jobs found -->
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger text-center">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-warning text-center">
+            <p>No jobs to display.</p>
+        </div>
+    }
+    else
+    {
+        <!-- Status boxes for Approved and Rejected Jobs with Flexbox layout -->
+        <div class="status-container">
+            <div class="status-box approved-box">
+                Approved Jobs
+            </div>
+            <div class="status-box rejected-box">
+                Rejected Jobs
+            </div>
+        </div>
+
+        <!-- Job Listings Table -->
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Job Title</th>
+                    <th>Company</th>
+                    <th>Location</th>
+                    <th>Job Type</th>
+                    <th>Salary</th>
+                    <th>Description</th>
+                    <th>Posted Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Count(); i++)
+                {
+                    var job = Model.ElementAt(i);
+                    var status = ViewBag.JobStatus[i]; // Get the status (approved/rejected) from ViewBag
+
+                    <!-- Row styling based on status -->
+                    <tr style="@(status == "Approved" ? "background-color: #d4edda; " : "background-color: #f8d7da; ")">
+                        <td>@job.Job_Tittle</td>
+                        <td>@job.Company_Name</td>
+                        <td>@job.Job_Location</td>
+                        <td>@job.Job_Type</td>
+                        <td>@job.Salary</td>
+                        <td>@job.Description</td>
+                        <td>@job.Job_PstedDate.ToShortDateString()</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

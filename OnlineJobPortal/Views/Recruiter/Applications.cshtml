@@ -1,0 +1,152 @@
+﻿@model IEnumerable<OnlineJobPortal.Models.Application>
+
+@{
+    ViewBag.Title = "Applications";
+}
+
+<style>
+    /* Container Styling */
+    .container {
+        background: #f9f9f9; /* Light background */
+        color: #333; /* Dark text */
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        font-family: 'Roboto', sans-serif;
+        max-width: 900px;
+        margin: auto;
+    }
+
+    /* Header Styling */
+    h2 {
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+        color: #333; /* Dark text */
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* Table Styling */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 10px 0;
+        font-size: 14px;
+        background: white; /* Light table background */
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    thead {
+        background: #333; /* Dark header */
+        color: #ffd700; /* Gold text */
+    }
+
+    thead th {
+        text-align: left;
+        padding: 12px;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    tbody td {
+        background: #fff; /* White rows */
+        color: #555; /* Subtle dark text */
+        padding: 10px;
+        border-top: 1px solid #ddd; /* Light border */
+    }
+
+    tbody tr:nth-child(even) td {
+        background: #f7f7f7; /* Light grey for alternate rows */
+    }
+
+    tbody tr:hover td {
+        background: #fffbe5; /* Light gold hover */
+        transition: background 0.3s ease-in-out;
+    }
+
+    /* Button Styling */
+    .btn {
+        display: inline-block;
+        text-decoration: none;
+        color: white;
+        background: #333; /* Dark button */
+        font-size: 12px;
+        font-weight: bold;
+        text-transform: uppercase;
+        padding: 5px 12px;
+        border-radius: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+        background: #ffd700; /* Gold hover */
+        color: #333; /* Dark text on hover */
+        transform: scale(1.1);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Muted Text Styling */
+    .text-muted {
+        color: #999 !important;
+        font-style: italic;
+    }
+
+    /* Responsive Design */
+    @@media screen and (max-width: 768px) {
+        table {
+            font-size: 12px;
+        }
+
+        thead th, tbody td {
+            padding: 8px;
+        }
+
+        h2 {
+            font-size: 20px;
+        }
+    }
+</style>
+
+<div class="container">
+    <h2>Applications</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Sr.</th>
+                <th>Candidate Name</th>
+                <th>Job Title</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                int counter = 1;
+                foreach (var application in Model)
+                {
+                    <tr>
+                        <td>@counter</td>
+                        <td>@application.Candidate_Profile.Name</td>
+                        <td>@application.Job.Job_Tittle</td>
+                        <td>
+                            <a href="@Url.Action("ApplicationDetails", "Recruiter", new { applicationId = application.Application_Id })"
+                               class="btn">Details</a>
+                        </td>
+                    </tr>
+                    counter++;
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="4" class="text-center text-muted">No applications found.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

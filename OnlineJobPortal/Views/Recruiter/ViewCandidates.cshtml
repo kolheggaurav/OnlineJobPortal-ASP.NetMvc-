@@ -1,0 +1,37 @@
+﻿@model IEnumerable<OnlineJobPortal.Models.Candidate_Profile>
+@{
+    ViewBag.Title = "ViewCandidates";
+}
+
+<h2>Candidate Profiles</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Contact</th>
+            <th>Resume</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var profile in Model)
+        {
+            <tr>
+                <td>@profile.Name</td>
+                <td>@profile.Gender</td>
+                <td>@profile.Contact_No</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(profile.ResumePdf))
+                    {
+                        <a href="@Url.Content(profile.ResumePdf)" target="_blank">Download Resume</a>
+                    }
+                    else
+                    {
+                        <span>No Resume Uploaded</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

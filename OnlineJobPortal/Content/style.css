@@ -1,0 +1,50 @@
+﻿/* General Reset */
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.navbar {
+    background-color: rgba(222, 184, 135, 0.66)
+}
+
+.navbar-brand {
+    font-family: 'Garamond', serif;
+    font-size: 35px;
+}
+
+.nav-link {
+    color: rgb(128, 41, 41);
+    text-decoration: none;
+    margin-right: 30px;
+    transition: font-size 0.3s ease-in-out;
+}
+
+
+.nav-link:hover {
+    font-size: 1.1em;
+}
+
+.cont {
+    padding-top: 170px;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    font-size: 40px;
+}
+
+
+@media only screen and (min-width:768px) {
+    .cont {
+        padding-top: 50px;
+        font-size: 10px;
+    }
+
+    @media only screen and (min-width: 767px) {
+        .cont {
+            padding-top: 200px;
+            font-size: 60px;
+        }
+    }
+}

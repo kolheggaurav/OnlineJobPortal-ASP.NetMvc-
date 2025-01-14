@@ -1,0 +1,241 @@
+﻿
+@model OnlineJobPortal.Models.Candidate_Profile
+
+@{
+    ViewBag.Title = "Save Profile";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #e6f7ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden; /* Remove scroll */
+        }
+
+        .form-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            animation: fadeIn 0.7s ease-in-out;
+            overflow-y: auto; /* Allow scrolling inside the container if needed */
+        }
+
+        h2 {
+            color: #4caf50;
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+            .form-group div {
+                flex: 1 1 45%;
+                min-width: 180px; /* Ensure input fields don't get too narrow */
+            }
+
+            .form-group label {
+                font-size: 14px;
+                color: #333;
+                margin-bottom: 5px;
+                display: block;
+                font-weight: 600;
+            }
+
+            .form-group input[type="text"],
+            .form-group input[type="file"] {
+                width: 100%;
+                padding: 10px;
+                font-size: 14px;
+                border-radius: 6px;
+                border: 1px solid #ccc;
+                background-color: #fafafa;
+                margin-bottom: 10px;
+                transition: border-color 0.3s ease, background-color 0.3s ease;
+            }
+
+                .form-group input[type="text"]:focus,
+                .form-group input[type="file"]:focus {
+                    border-color: #4caf50;
+                    background-color: #f1f9f4;
+                    outline: none;
+                }
+
+            .form-group input[type="file"] {
+                padding: 8px;
+            }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+            button:hover {
+                background-color: #45a049;
+                transform: translateY(-2px);
+            }
+
+            button:active {
+                transform: translateY(2px);
+            }
+
+        /* Fade-in Animation */
+        @@keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile Responsive */
+        @@media (max-width: 768px) {
+            .form-group div {
+                flex: 1 1 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Save Profile</h2>
+
+        @using (Html.BeginForm("SaveProfile", "Candidate", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-group">
+                <div>
+                    <label for="Name">Name</label>
+                    <input type="text" name="Name" id="Name" value="@Model.Name" required />
+                </div>
+
+                <div>
+                    <label for="Gender">Gender</label>
+                    <input type="text" name="Gender" id="Gender" value="@Model.Gender" required />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div>
+                    <label for="Contact_No">Contact No</label>
+                    <input type="text" name="Contact_No" id="Contact_No" value="@Model.Contact_No" required />
+                </div>
+
+                <div>
+                    <label for="Address">Address</label>
+                    <input type="text" name="Address" id="Address" value="@Model.Address" required />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div>
+                    <label for="Career_Preference">Career Preference</label>
+                    <input type="text" name="Carrear_Prefrence" id="Career_Preference" value="@Model.Carrear_Prefrence" required />
+                </div>
+
+                <div>
+                    <label for="Highest_Qualification">Highest Qualification</label>
+                    <input type="text" name="Highest_Qalification" id="Highest_Qualification" value="@Model.Highest_Qalification" required />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div>
+                    <label for="College_Name">College Name</label>
+                    <input type="text" name="Colleage_name" id="College_Name" value="@Model.Colleage_name" required />
+                </div>
+
+                <div>
+                    <label for="Percentage_CGPA">Percentage / CGPA</label>
+                    <input type="text" name="Per_Or_CGPA" id="Percentage_CGPA" value="@Model.Per_Or_CGPA" required />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div>
+                    <label for="Passing_Year">Passing Year</label>
+                    <input type="text" name="Pass_Year" id="Passing_Year" value="@Model.Pass_Year" required />
+                </div>
+
+                <div>
+                    <label for="Key_Skills">Key Skills</label>
+                    <input type="text" name="Key_Skills" id="Key_Skills" value="@Model.key_Skills" required />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div>
+                    <label for="Project_Name">Project Name</label>
+                    <input type="text" name="Project_Name" id="Project_Name" value="@Model.Project_Name" required />
+                </div>
+
+                <div>
+                    <label for="Details">Details</label>
+                    <input type="text" name="Details" id="Details" value="@Model.Details" required />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="ResumePdf">Upload Resume</label>
+                <input type="file" name="ResumePdf" id="ResumePdf" />
+            </div>
+
+            <button type="submit">Save Profile</button>
+        }
+    </div>
+    <script>
+        // JavaScript to handle file validation and resume download
+        document.getElementById('ResumePdf').addEventListener('change', function (event) {
+            var file = event.target.files[0];
+            var validExtensions = ['pdf']; // Allowed file extensions
+            var fileExtension = file.name.split('.').pop().toLowerCase();
+
+            // Validate file type
+            if (validExtensions.indexOf(fileExtension) === -1) {
+                alert('Please upload a valid PDF file.');
+                event.target.value = ''; // Clear the file input
+            }
+        });
+    </script>
+</body>
+</html>

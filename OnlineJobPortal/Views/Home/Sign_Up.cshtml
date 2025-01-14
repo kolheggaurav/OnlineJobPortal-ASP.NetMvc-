@@ -1,0 +1,37 @@
+﻿@{
+    Layout = null; // No layout needed for a partial view
+}
+<link href="~/Content/Sign_Up_style.css" rel="stylesheet" />
+
+@using (Html.BeginForm())
+{
+    <div class="modal-header">
+        Sign Up
+    </div>
+    <div class="form-group">
+        <label for="userId">User ID</label>
+        <input type="text" id="userId" class="form-control" placeholder="Enter User ID" required>
+    </div>
+    <div class="form-group">
+        <label for="userName">Username</label>
+        <input type="text" id="userName" class="form-control" placeholder="Enter Username" required>
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" class="form-control" placeholder="Enter Email" required>
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" class="form-control" placeholder="Enter Password" required>
+    </div>
+    <div class="form-group">
+        <label for="role">Select Role</label>
+        <select id="role" class="form-control" required>
+            <option value="">Select Role</option>
+            <option value="student">Student</option>
+            <option value="recruiter">Recruiter</option>
+            <option value="admin">Admin</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Register</button>
+}

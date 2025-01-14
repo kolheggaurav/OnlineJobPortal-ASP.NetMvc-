@@ -1,0 +1,146 @@
+﻿@model OnlineJobPortal.Models.Application
+
+@{
+    ViewBag.Title = "ApplicationDetails";
+}
+
+<style>
+    /* General Styling */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f7fa;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: auto;
+        padding: 30px;
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        margin-top: 50px;
+    }
+
+    h2 {
+        font-size: 36px;
+        font-weight: 600;
+        color: #333;
+        text-align: center;
+        margin-bottom: 30px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    h3 {
+        font-size: 26px;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    /* Card Layout */
+    .card {
+        background: #ffffff;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: 0.3s;
+    }
+
+    .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .card p {
+        font-size: 16px;
+        color: #555;
+        line-height: 1.8;
+        margin-bottom: 15px;
+    }
+
+    .card strong {
+        color: #333;
+        font-weight: 600;
+    }
+
+    /* Button Styling */
+    .btn {
+        padding: 10px 20px;
+        font-size: 18px;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: 0.3s;
+        width: 48%;
+        text-align: center;
+        font-weight: 600;
+    }
+
+    .btn-primary {
+        background: #007bff;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background: #0056b3;
+        transform: translateY(-2px);
+    }
+
+    .btn-danger {
+        background: #e74c3c;
+        color: white;
+    }
+
+    .btn-danger:hover {
+        background: #c0392b;
+        transform: translateY(-2px);
+    }
+
+    /* Responsive Styling */
+    
+    @@media (max-width: 768px) {
+        .btn {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+    }
+</style>
+
+<div class="container">
+    <h2>Application Details</h2>
+
+    <!-- Job Details Card -->
+    <div class="card">
+        <h3>Job Details</h3>
+        <p><strong>Title:</strong> @Model.Job.Job_Tittle</p>
+        <p><strong>Company:</strong> @Model.Job.Company_Name</p>
+        <p><strong>Location:</strong> @Model.Job.Job_Location</p>
+        <p><strong>Type:</strong> @Model.Job.Job_Type</p>
+        <p><strong>Salary:</strong> @Model.Job.Salary</p>
+        <p><strong>Description:</strong> @Model.Job.Description</p>
+        <p><strong>Posted On:</strong> @Model.Job.Job_PstedDate.ToShortDateString()</p>
+    </div>
+
+    <!-- Candidate Details Card -->
+    <div class="card">
+        <h3>Candidate Details</h3>
+        <p><strong>Name:</strong> @Model.Candidate_Profile.Name</p>
+        <p><strong>Qualification:</strong> @Model.Candidate_Profile.Highest_Qalification</p>
+        <p><strong>Email:</strong> @Model.Candidate_Profile.Address</p>
+        <p>
+            <strong>Resume:</strong>
+            @if (!string.IsNullOrEmpty(Model.Candidate_Profile.ResumePdf))
+            {
+                <a href="@Url.Content("~/Content/pdf/" + Model.Candidate_Profile.ResumePdf)" target="_blank">View Resume</a>
+            }
+            else
+            {
+                <span>Not Uploaded</span>
+            }
+        </p>
+    </div>
+</div>

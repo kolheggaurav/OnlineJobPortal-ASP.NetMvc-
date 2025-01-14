@@ -1,0 +1,116 @@
+﻿@model OnlineJobPortal.Models.Registration
+
+@{
+    ViewBag.Title = "EditUser";
+}
+
+<h2>Edit User</h2>
+
+<form method="post" action="/Admin/EditUser" class="edit-user-form">
+    <input type="hidden" name="UserID" value="@Model.UserID" />
+
+    <label for="email">Email:</label>
+    <input type="email" name="Email" value="@Model.Email" required />
+
+    <label for="password">Password:</label>
+    <input type="text" name="password" value="@Model.password" required />
+
+    <label for="role">Role:</label>
+    <select name="your_Role" required>
+        <option value="admin" @(Model.your_Role == "admin" ? "selected" : "")>Admin</option>
+        <option value="recruiter" @(Model.your_Role == "recruiter" ? "selected" : "")>Recruiter</option>
+        <option value="candidate" @(Model.your_Role == "candidate" ? "selected" : "")>Candidate</option>
+    </select>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-save">Save</button>
+        <a href="/Admin/TotalUser" class="btn btn-cancel">Cancel</a>
+    </div>
+</form>
+
+<style>
+    body {
+        font-family: 'Poppins', Arial, sans-serif;
+        background-color: #f9f9f9;
+        margin: 0;
+        padding: 0;
+    }
+
+    h2 {
+        text-align: center;
+        font-size: 28px;
+        color: #333;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .edit-user-form {
+        max-width: 500px;
+        margin: 0 auto;
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+        font-weight: bold;
+        color: #555;
+        margin-top: 10px;
+        display: block;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+        color: #333;
+    }
+
+        input:focus, select:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+        }
+
+    .form-actions {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        display: inline-block;
+        text-align: center;
+    }
+
+    .btn-save {
+        background-color: #28a745;
+        color: white;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-save:hover {
+            background-color: #218838;
+        }
+
+    .btn-cancel {
+        background-color: #dc3545;
+        color: white;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-cancel:hover {
+            background-color: #c82333;
+        }
+</style>

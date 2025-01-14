@@ -1,0 +1,197 @@
+﻿@model IEnumerable<OnlineJobPortal.Models.Approved_Jobs>
+
+@{
+    ViewBag.Title = "Available Jobs";
+}
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: rgba(222, 184, 135, 0.445);
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        margin-top: 40px;
+        padding: 0 20px;
+    }
+
+    h2 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 30px;
+    }
+
+    .search-bar {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+        .search-bar input[type="text"] {
+            width: 400px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px 0 0 8px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .search-bar button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 0 8px 8px 0;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+            .search-bar button:hover {
+                background-color: #0056b3;
+            }
+
+    .job-cards-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+    }
+
+    .job-card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.3s ease-in-out;
+        padding: 20px;
+        position: relative;
+    }
+
+        .job-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+    .job-card-header {
+        font-size: 18px;
+        font-weight: bold;
+        color: #007bff;
+        margin-bottom: 10px;
+    }
+
+    .job-card-body {
+        font-size: 14px;
+        color: #555;
+        margin-bottom: 15px;
+    }
+
+        .job-card-body p {
+            margin: 5px 0;
+        }
+
+    .job-card-footer {
+        text-align: right;
+        margin-top: 15px;
+    }
+
+    .apply-button {
+        background-color: #28a745;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        font-size: 14px;
+    }
+
+        .apply-button:hover {
+            background-color: #218838;
+        }
+
+        .apply-button:disabled {
+            background-color: #d6d6d6;
+            cursor: not-allowed;
+        }
+
+    .job-card-header span {
+        font-weight: normal;
+        color: #007bff;
+    }
+
+    .job-card-footer p {
+        margin: 0;
+    }
+</style>
+
+<div class="container">
+    <h2>Available Jobs</h2>
+    @if (TempData["Message"] != null)
+    {
+        <p class="alert-message">@TempData["Message"]</p>
+    }
+
+    <!-- Search bar -->
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search by job title or location" onkeyup="searchJobs()" />
+    </div>
+
+    <div class="job-cards-container" id="jobCardsContainer">
+        @foreach (var job in Model)
+        {
+            <div class="job-card" data-title="@job.Job_Tittle" data-location="@job.Job_Location">
+                <div class="job-card-header">
+                    <span>@job.Job_Tittle</span>
+                    <span style="float: right;">@job.Company_Name</span>
+                </div>
+                <div class="job-card-body">
+                    <p><strong>Location:</strong> @job.Job_Location</p>
+                    <p><strong>Type:</strong> @job.Job_Type</p>
+                    <p><strong>Salary:</strong> @job.Salary</p>
+                    <p><strong>Description:</strong> @job.Description</p>
+                    <p><strong>Posted:</strong> @job.Job_PstedDate.ToShortDateString()</p>
+                </div>
+                <div class="job-card-footer">
+                    <form action="@Url.Action("Apply", "Candidate")" method="post">
+                        <input type="hidden" name="jobId" value="@job.Id" />
+                        <button class="apply-button" type="submit">Apply</button>
+                    </form>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script>// Function to filter job cards based on the search input (job title or location)
+    function searchJobs() {
+        // Get the value from the search input
+        var searchQuery = document.getElementById('searchInput').value.toLowerCase();
+        var jobCards = document.querySelectorAll('.job-card');
+
+        jobCards.forEach(function (card) {
+            var jobTitle = card.getAttribute('data-title').toLowerCase();
+            var jobLocation = card.getAttribute('data-location').toLowerCase();
+
+            // Check if either the job title or the job location contains the search query
+            if (jobTitle.includes(searchQuery) || jobLocation.includes(searchQuery)) {
+                card.style.display = ""; // Show the card
+            } else {
+                card.style.display = "none"; // Hide the card
+            }
+        });
+    }</script>
+
+<script>
+    $(document).ready(function () {
+        var successMessage = '@TempData["SuccessMessage"]';
+        var errorMessage = '@TempData["ErrorMessage"]';
+
+        if (successMessage) {
+            alert(successMessage);
+        } else if (errorMessage) {
+            alert(errorMessage);
+        }
+    });
+</script>
+

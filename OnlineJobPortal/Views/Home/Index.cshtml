@@ -1,0 +1,394 @@
+﻿@model OnlineJobPortal.Models.Registration
+
+@{
+    ViewBag.Title = "Index";
+}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HireHub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link href="~/Content/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMcFbbcz37owwz2mXYy3I2iFkSpSNROs2D+8y+" crossorigin="anonymous">
+    <style>
+        /* Styles */
+        .modal-content {
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            background-color: #f8f9fa;
+            max-width: 400px;
+            margin: auto;
+        }
+
+        .modal-header {
+            background-color: rgba(222, 184, 135, 0.66);
+            color: black;
+            border-bottom: none;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .btn-close {
+            background-color: transparent;
+            border: none;
+            color: black;
+            opacity: 0.8;
+        }
+
+            .btn-close:hover {
+                opacity: 1;
+            }
+
+        .form-control {
+            border-radius: 6px;
+            padding: 0.5rem;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+        }
+
+            .form-control:focus {
+                border-color: rgba(222, 184, 135, 0.445);
+                box-shadow: 0 0 0 0.2rem rgba(222, 184, 135, 0.66);
+            }
+
+        .btn-primary {
+            background-color: rgba(222, 184, 135, 0.66);
+            border: none;
+            border-radius: 6px;
+            padding: 0.5rem;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+            color: black;
+        }
+
+            .btn-primary:hover {
+                background-color: rgba(222, 184, 135, 0.7);
+                color: red;
+            }
+
+        .container {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container-fluid .row img {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 90vh;
+            position: relative;
+            /*                position:absolute;*/
+        }
+
+        .row {
+            background-color: rgba(222, 184, 135, 0.445);
+            height: 100vh;
+        }
+
+        /*        #mainView {
+             background-image:url(bgimage.jpg);
+             height:300px;
+        }*/
+        .forgotEmail {
+            margin-bottom: 30px;
+        }
+
+        #btnsearch {
+            height: 40px;
+        }
+
+        .alert {
+            background-color: none;
+            height: 100px;
+            width: 100px;
+        }
+
+        .demo {
+            padding-top: 100px;
+            text-align: center;
+            /*            justify-content:center;
+            justify-items:center;*/
+        }
+
+        .span {
+            font-size: 80px;
+        }
+
+        @@media only screen and (max-width: 768px) {
+            .container-fluid .row .col-xl-4 img {
+                height: 300px;
+                width: 100%;
+            }
+
+            .demo {
+                padding-top: 15px;
+                font-size: 20px;
+            }
+
+            .span {
+                font-size: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand ms-2" href="#">HireHub</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Home</a></li>
+                    <a class="nav-link active" aria-current="page" href="@Url.Action("Jobs", "Candidate")">Jobs</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Profile</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#signUpModal">Sign Up</a></li>
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Log In</a></li>
+
+                        </ul>
+                    </li>
+                    @*<li class="nav-item"><a class="nav-link" href="#">Applications</a></li>*@
+                </ul>
+                @*<form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" id="btnsearch" type="submit">Search</button>
+                </form>*@
+            </div>
+        </div>
+    </nav>
+
+    <section class="container-fluid">
+        <div class="row">
+            <div class="col-xl-5 col-md-12">
+                <h1 class="demo">
+                    <pre>"Access exclusive <br /><span class="span">Jobs</span>,</pre>
+                    <pre>personalized recommendations</pre>
+                    <pre> ,and <span class="span">Career </span><br />advice."</pre>
+                </h1>
+            </div>
+            <div class="col-xl-7 col-md-12">
+                <img src="~/Content/job-search-singapore-2000x1334-1.png" alt="Alternate Text" />
+            </div>
+        </div>
+    </section>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="successModalLabel">Success</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>@TempData["SuccessMessage"]</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var successModal = new bootstrap.Modal(document.getElementById('successModal'));
+                successModal.show();
+            });
+        </script>
+    }
+
+    <!-- Error Modal -->
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>@TempData["ErrorMessage"]</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                errorModal.show();
+            });
+        </script>
+    }
+
+    <div class="modal fade" id="signUpModal" tabindex="-1" aria-labelledby="signUpModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Sign Up</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/Home/SaveSignUpData" method="post">
+                        @Html.AntiForgeryToken()
+                        <div class="form-group">
+                            <label for="userName">Username</label>
+                            <input type="text" name="Username" id="userName" class="form-control" placeholder="Enter Username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" name="Email" id="email" class="form-control" placeholder="Enter Email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <div style="position: relative;">
+                                <input type="password" name="password" id="password" class="form-control" placeholder="Enter Password" required>
+                                <i id="togglePassword" class="fa-fa-eye" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;"></i>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="role">Select Role</label>
+                            <select name="your_Role" id="role" class="form-control" required>
+                                <option value="" disabled selected>Select Role</option>
+                                <option value="candidate">Candidate</option>
+                                <option value="recruiter">Recruiter</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 mt-3">Sign Up</button>
+                    </form>
+                    <div class="text-center mt-3">
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal" class="text-decoration-none">
+                            Forgot Password?
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="forgotPasswordModalLabel">Forgot Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="forgotEmail">Email</label>
+                            <input type="email" id="forgotEmail" class="form-control" placeholder="Enter Email" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Reset Password</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Log In</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/Home/Log_In" method="post">
+                        @Html.AntiForgeryToken()
+                        <div class="form-group mb-3">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" id="email" class="form-control" placeholder="Enter Email" required>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="password">Password</label>
+                            <input type="password" name="password" id="password" class="form-control" placeholder="Enter Password" required>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="role">Select Role</label>
+                            <select name="role" id="role" class="form-control" required>
+                                <option value="" disabled selected>Select Role</option>
+                                <option value="admin">Admin</option>
+                                <option value="candidate">Candidate</option>
+                                <option value="recruiter">Recruiter</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Log In</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error Modal -->
+    @if (TempData["LoginError"] != null)
+    {
+        <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>@TempData["LoginError"]</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                errorModal.show();
+            });
+        </script>
+    }
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Toggle Password Visibility
+        const passwordField = document.getElementById('password');
+        const togglePassword = document.getElementById('togglePassword');
+
+        togglePassword.addEventListener('click', () => {
+            // Switch the password field type
+            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+
+            // Toggle the icon
+            //togglePassword.classList.toggle('fa-eye');
+            togglePassword.classList.toggle('fa-eye-slash');
+        });
+
+         function handleRoleSelection() {
+            const role = document.getElementById('role').value;
+            if (role === 'recruiter') {
+                window.location.href = '@Url.Action("Index", "Recruiter")';  // Redirect to RecruiterController Index action
+            } else if (role === 'admin') {
+                window.location.href = '@Url.Action("Index", "Admin")';  // Redirect to AdminController Index action
+            } else if (role === 'candidate') {
+                window.location.href = '@Url.Action("Index", "Candidate")';  // Redirect to AdminController Index action
+            } else {
+                alert('Please select a valid role.');
+            }
+        }
+    </script>
+
+
+</body>
+</html>

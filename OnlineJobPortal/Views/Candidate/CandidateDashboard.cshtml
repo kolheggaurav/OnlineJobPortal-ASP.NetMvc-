@@ -1,0 +1,170 @@
+﻿@using System.Linq
+@model IEnumerable<OnlineJobPortal.Models.Application>
+
+@{
+    ViewBag.Title = "CandidateDashboard";
+}
+
+<style>
+    /* General Styling */
+    .container {
+        background: #f7f7f7;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        font-family: 'Inter', sans-serif;
+        margin-top: 50px;
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    h2 {
+        font-size: 28px;
+        font-weight: bold;
+        color: #4a4a4a;
+        text-align: center;
+        margin-bottom: 30px;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 30px;
+    }
+
+        table th, table td {
+            text-align: center;
+            padding: 12px;
+            font-size: 14px;
+            color: #444;
+        }
+
+        table th {
+            background: linear-gradient(90deg, #c19a6b, #a47e45); /* Gradient header */
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        table td {
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            color: #333;
+        }
+
+    /* Styling for Badges (Status) */
+    .badge {
+        padding: 5px 10px;
+        font-size: 14px;
+        border-radius: 12px;
+        font-weight: 600;
+    }
+
+    .badge-secondary {
+        background-color: #868e96;
+        color: #fff;
+    }
+
+    .badge-success {
+        background-color: #28a745;
+        color: #fff;
+    }
+
+    .badge-danger {
+        background-color: #dc3545;
+        color: #fff;
+    }
+
+    /* Styling for Action Buttons */
+    .btn {
+        display: inline-block;
+        padding: 8px 20px;
+        font-size: 14px;
+        font-weight: 600;
+        border-radius: 30px;
+        text-transform: uppercase;
+        transition: all 0.3s ease-in-out;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-info {
+        background: linear-gradient(90deg, #17a2b8, #61c0c8); /* Info Gradient */
+        color: white;
+        border: none;
+    }
+
+        .btn-info:hover {
+            background: linear-gradient(90deg, #138496, #4fb8c1);
+            transform: translateY(-2px);
+        }
+
+    /* Hover Effect on Rows */
+    table tbody tr:hover {
+        background-color: #f1f1f1;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    /* Styling for "No applications found" message */
+    .text-muted {
+        font-size: 16px;
+        color: #6c757d;
+        font-weight: 400;
+    }
+</style>
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">My Applications</h2>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Job Title</th>
+                <th>Company</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                int counter = 1;
+                foreach (var application in Model)
+                {
+                    <tr>
+                        <td>@counter</td>
+                        <td>@application.Job.Job_Tittle</td>
+                        <td>@application.Job.Company_Name</td>
+                        <td>
+                            @if (string.IsNullOrEmpty(application.Status))
+                            {
+                                <span class="badge badge-secondary">Pending</span>
+                            }
+                            else if (application.Status == "Shortlisted")
+                            {
+                                <span class="badge badge-success">Shortlisted</span>
+                            }
+                            else if (application.Status == "Rejected")
+                            {
+                                <span class="badge badge-danger">Rejected</span>
+                            }
+                        </td>
+                        <td>
+                            <a href="@Url.Action("ApplicationDetails", "Candidate", new { applicationId = application.Application_Id })" class="btn btn-info btn-sm">View Details</a>
+                        </td>
+                    </tr>
+                    counter++;
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="5" class="text-center text-muted">No applications found.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
